@@ -1,5 +1,8 @@
+type COMMANDS_TABLE_KEY = string;
+
 class _CommandsTable {
-  private static tables: Map<string, number> = new Map();
+  private static tables: Map<COMMANDS_TABLE_KEY, number> = new Map();
+
 
   static sendCommand(...params: any){
   };
