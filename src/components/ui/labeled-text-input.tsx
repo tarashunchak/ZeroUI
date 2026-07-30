@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   textInput: {
-    height: 40,
+    minHeight: 40,
+    maxHeight: 52,
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     borderColor: "white",
     borderWidth: 0.5,

@@ -1,7 +1,7 @@
-import * as SplashScreen from 'expo-splash-screen';
+//import * as SplashScreen from 'expo-splash-screen';
 import HomeScreen from '.';
 
-SplashScreen.preventAutoHideAsync();
+//SplashScreen.preventAutoHideAsync();
 
 export default function TabLayout() {
   return (
