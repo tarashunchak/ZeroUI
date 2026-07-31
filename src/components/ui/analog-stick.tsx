@@ -4,6 +4,10 @@ import { createAnimatedComponent, useAnimatedStyle, useSharedValue, withSpring }
 
 const AnimatedView = createAnimatedComponent(View);
 
+function vectorLength(x: number, y: number){
+  return Math.sqrt(x*x + y*y);
+};
+
 interface ZUIAnalogStickParams {
   minValue: number;
   maxValue: number;
@@ -20,8 +24,8 @@ export default function ZUIAnalogStick(props: ZUIAnalogStickParams) {
     //console.log(`X: ${translationX.value} =-= Y: ${translationY.value}`);
     return ({
       transform: [
-        { translateX: Math.min(Math.max(translationX.value, props.minValue - 20), props.maxValue + 20) },
-        { translateY: Math.min(Math.max(translationY.value, props.minValue - 20), props.maxValue + 20) },
+        { translateX: Math.min(Math.max(translationX.value, props.minValue - 20), props.maxValue + 20) % vectorLength(translationX.value, translationY.value) },
+        { translateY: Math.min(Math.max(translationY.value, props.minValue - 20), props.maxValue + 20) % vectorLength(translationX.value, translationY.value) },
         { scale: scale.value },
       ],
       cursor: "grabbing",

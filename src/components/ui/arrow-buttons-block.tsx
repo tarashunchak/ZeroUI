@@ -1,46 +1,28 @@
-import { memo, useCallback } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { createAnimatedComponent, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import { memo } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import ZUIPressableScale from "./pressable-scale";
 
-const AnimatedPressable = createAnimatedComponent(Pressable);
-
-interface ZUIArrowButtonProps{
+interface ZUIArrowButtonProps {
   text: string;
 };
 
-export const ZUIArrowButton = memo(({text}: ZUIArrowButtonProps)=>{
-  const val = useSharedValue(1);
-  const leftAnimatedStyle = useAnimatedStyle(()=>({
-    transform: [{scale: val.value}],
-  }));
-
-  const onPressIn = useCallback(()=>{
-    val.value = withSpring(0.8);
-  }, []);
-
-  const onPressOut = useCallback(()=>{
-    val.value = withSpring(1);
-  }, []);
-
+export const ZUIArrowButton = memo(({ text }: ZUIArrowButtonProps) => {
   return (
-  <AnimatedPressable style={[styles.button, leftAnimatedStyle]} 
-    onPressIn={onPressIn}
-    onPressOut={onPressOut}
-  >
-    <Text>{text}</Text>
-  </AnimatedPressable>
+    <ZUIPressableScale style={styles.button}>
+      <Text>{text}</Text>
+    </ZUIPressableScale>
   );
 });
 
-export default function ZUIArrowButtonsBlock(){
+export default function ZUIArrowButtonsBlock() {
   return (
     <View style={styles.container}>
-      <ZUIArrowButton text="Left"/>
+      <ZUIArrowButton text="Left" />
       <View style={styles.column}>
-        <ZUIArrowButton text="Up"/>
-        <ZUIArrowButton text="Down"/>
+        <ZUIArrowButton text="Up" />
+        <ZUIArrowButton text="Down" />
       </View>
-      <ZUIArrowButton text="Right"/>
+      <ZUIArrowButton text="Right" />
     </View>
   );
 };

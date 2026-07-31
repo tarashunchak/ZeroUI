@@ -1,14 +1,18 @@
-import { Pressable, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
+import ZUIPressableScale from "./pressable-scale";
 
 interface Props {
-  onPress: (_:any) => any;
+  onPress: (_: any) => any;
 };
 
-export default function ConfirmButton({onPress}: Props) {
+export default function ConfirmButton({ onPress }: Props) {
   return (
-    <Pressable style={styles.container}>
+    <ZUIPressableScale
+      style={styles.container}
+      onPress={onPress}
+    >
       <Text style={styles.text}>Confirm</Text>
-    </Pressable>
+    </ZUIPressableScale>
   );
 };
 
