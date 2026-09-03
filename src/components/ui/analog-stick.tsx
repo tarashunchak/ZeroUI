@@ -4,8 +4,8 @@ import { createAnimatedComponent, useAnimatedStyle, useSharedValue, withSpring }
 
 const AnimatedView = createAnimatedComponent(View);
 
-function vectorLength(x: number, y: number){
-  return Math.sqrt(x*x + y*y);
+function vectorLength(x: number, y: number) {
+  return Math.sqrt(x * x + y * y);
 };
 
 interface ZUIAnalogStickParams {

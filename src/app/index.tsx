@@ -3,6 +3,7 @@ import ZUIAnalogStick from '@/components/ui/analog-stick';
 import ZUIArrowButtonsBlock from '@/components/ui/arrow-buttons-block';
 import ConfirmButton from '@/components/ui/confirm-button';
 import LabeledTextInput from '@/components/ui/labeled-text-input';
+import ZUIToggleButton from '@/components/ui/toggle-button';
 import { Stack } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -18,6 +19,7 @@ export default function HomeScreen() {
       <View style={[styles.container, {paddingTop: insets.top}]}>
         <Text style={styles.label}>Zero UI</Text>
         <View style={styles.contentBlock}>
+          <ZUIToggleButton orientation='v'/>
           <ZUIAnalogStick maxValue={50} minValue={-50} size={20} defaultValue={undefined}/>
           <ZUIArrowButtonsBlock/>
           <ZUIBlueButton/>

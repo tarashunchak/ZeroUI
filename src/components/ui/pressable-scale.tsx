@@ -1,10 +1,10 @@
-import { useCallback } from "react";
+import { memo, useCallback } from "react";
 import { Pressable } from "react-native";
 import { createAnimatedComponent, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 
 const AnimatedPressable = createAnimatedComponent(Pressable);
 
-export default function ZUIPressableScale({ children, style }: any) {
+function ZUIPressableScale({ children, style }: any) {
   const val = useSharedValue(1);
   const leftAnimatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: val.value }],
@@ -27,3 +27,5 @@ export default function ZUIPressableScale({ children, style }: any) {
     </AnimatedPressable>
   );
 };
+
+export default memo(ZUIPressableScale);
