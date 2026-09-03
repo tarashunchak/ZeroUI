@@ -1,8 +1,10 @@
 import ZUIBlueButton from '@/client/components/buttons/blue-button';
+import ZUIAnalogBar from '@/components/ui/analog-bar';
 import ZUIAnalogStick from '@/components/ui/analog-stick';
 import ZUIArrowButtonsBlock from '@/components/ui/arrow-buttons-block';
 import ConfirmButton from '@/components/ui/confirm-button';
 import LabeledTextInput from '@/components/ui/labeled-text-input';
+import ZUINumPad from '@/components/ui/numpad';
 import ZUIToggleButton from '@/components/ui/toggle-button';
 import { Stack } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
@@ -16,16 +18,18 @@ export default function HomeScreen() {
         headerShown: false,
       }}
     >
-      <View style={[styles.container, {paddingTop: insets.top}]}>
+      <View style={[styles.container, { paddingTop: insets.top }]}>
         <Text style={styles.label}>Zero UI</Text>
         <View style={styles.contentBlock}>
-          <ZUIToggleButton orientation='v'/>
-          <ZUIAnalogStick maxValue={50} minValue={-50} size={20} defaultValue={undefined}/>
-          <ZUIArrowButtonsBlock/>
-          <ZUIBlueButton/>
-          <LabeledTextInput label='MC IP Address'/>
-          <LabeledTextInput label='Port'/>
-          <ConfirmButton onPress={()=>{}}/>
+          <ZUINumPad />
+          <ZUIAnalogBar minVal={0} maxVal={1024} gap={1} color="" />
+          <ZUIToggleButton orientation='v' />
+          <ZUIAnalogStick maxValue={50} minValue={-50} size={20} defaultValue={undefined} />
+          <ZUIArrowButtonsBlock />
+          <ZUIBlueButton />
+          <LabeledTextInput label='MC IP Address' />
+          <LabeledTextInput label='Port' />
+          <ConfirmButton onPress={() => { }} />
         </View>
       </View>
     </Stack.Screen>
@@ -34,7 +38,6 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "black",
     alignItems: "center",
     gap: 80
