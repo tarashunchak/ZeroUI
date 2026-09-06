@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import { createAnimatedComponent, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
@@ -20,12 +21,26 @@ export default function ZUIAnalogStick(props: ZUIAnalogStickParams) {
   const translationY = useSharedValue<number>(props.defaultValue ?? 0);
   const scale = useSharedValue<number>(1);
 
+  const cutToRadius = useCallback((pos : number)=>{
+    const tmpPos = vectorLength(translationX.value, translationY.value);
+    console.warn("POS: ", tmpPos);
+    if(tmpPos < 50 && tmpPos > -50)
+      return tmpPos;
+    if(tmpPos < -50)
+      return -50;
+    return 50;
+  }, []);
+
+  const translationBordersCheck = useCallback((value: number) => {
+    return Math.min(Math.max(value, props.minValue), props.maxValue);
+  }, [props]);
+
   const animatedStyle = useAnimatedStyle(() => {
     //console.log(`X: ${translationX.value} =-= Y: ${translationY.value}`);
     return ({
       transform: [
-        { translateX: Math.min(Math.max(translationX.value, props.minValue - 20), props.maxValue + 20) % vectorLength(translationX.value, translationY.value) },
-        { translateY: Math.min(Math.max(translationY.value, props.minValue - 20), props.maxValue + 20) % vectorLength(translationX.value, translationY.value) },
+        { translateX: cutToRadius(translationBordersCheck(translationX.value)) },
+        { translateY: cutToRadius(translationBordersCheck(translationY.value)) },
         { scale: scale.value },
       ],
       cursor: "grabbing",
@@ -34,8 +49,8 @@ export default function ZUIAnalogStick(props: ZUIAnalogStickParams) {
 
   const panGesture = Gesture.Pan()
     .onUpdate((event) => {
-      translationX.value = withSpring(event.x);
-      translationY.value = withSpring(event.y);
+      translationX.value = withSpring(event.x - 50);
+      translationY.value = withSpring(event.y - 50);
     }).onEnd(() => {
       translationX.value = withSpring(props.defaultValue ?? 0);
       translationY.value = withSpring(props.defaultValue ?? 0);
@@ -61,9 +76,10 @@ const styles = StyleSheet.create({
     maxHeight: 140,
     aspectRatio: 1,
     borderColor: "white",
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 999,
     padding: "2%",
+    backgroundColor: "rgba(100, 100, 100, 0.4)"
   },
   stick: {
     flex: 1,
