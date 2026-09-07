@@ -5,7 +5,7 @@ import { createAnimatedComponent, useAnimatedStyle, useSharedValue, withSpring }
 
 const AnimatedView = createAnimatedComponent(View);
 
-function vectorLength(x: number, y: number) {
+function vectorLength(x: number, y: number): number {
   return Math.sqrt(x * x + y * y);
 };
 
@@ -21,15 +21,13 @@ export default function ZUIAnalogStick(props: ZUIAnalogStickParams) {
   const translationY = useSharedValue<number>(props.defaultValue ?? 0);
   const scale = useSharedValue<number>(1);
 
-  const cutToRadius = useCallback((pos : number)=>{
+  const cutToRadius = useCallback((pos: number) => {
     const tmpPos = vectorLength(translationX.value, translationY.value);
     console.warn("POS: ", tmpPos);
-    if(tmpPos < 50 && tmpPos > -50)
-      return tmpPos;
-    if(tmpPos < -50)
-      return -50;
-    return 50;
-  }, []);
+    if (tmpPos <= 50)
+      return pos;
+    return pos - 1;
+  }, [translationX, translationY]);
 
   const translationBordersCheck = useCallback((value: number) => {
     return Math.min(Math.max(value, props.minValue), props.maxValue);
@@ -39,8 +37,8 @@ export default function ZUIAnalogStick(props: ZUIAnalogStickParams) {
     //console.log(`X: ${translationX.value} =-= Y: ${translationY.value}`);
     return ({
       transform: [
-        { translateX: cutToRadius(translationBordersCheck(translationX.value)) },
-        { translateY: cutToRadius(translationBordersCheck(translationY.value)) },
+        { translateX: translationX.value },
+        { translateY: translationY.value },
         { scale: scale.value },
       ],
       cursor: "grabbing",
@@ -49,8 +47,14 @@ export default function ZUIAnalogStick(props: ZUIAnalogStickParams) {
 
   const panGesture = Gesture.Pan()
     .onUpdate((event) => {
-      translationX.value = withSpring(event.x - 50);
-      translationY.value = withSpring(event.y - 50);
+      let [x, y] = [event.x - 50, event.y - 50];
+      const tmp = vectorLength(x, y);
+      if(tmp > 50){
+        x %= 51;
+        y %= 51;
+      }
+      translationX.value = withSpring(x);
+      translationY.value = withSpring(y);
     }).onEnd(() => {
       translationX.value = withSpring(props.defaultValue ?? 0);
       translationY.value = withSpring(props.defaultValue ?? 0);

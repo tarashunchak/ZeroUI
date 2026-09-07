@@ -14,15 +14,26 @@ export const ZUIArrowButton = memo(({ text }: ZUIArrowButtonProps) => {
   );
 });
 
-export default function ZUIArrowButtonsBlock() {
+export default function ZUIArrowButtonsBlock({arrows}: {arrows: boolean | undefined}) {
+  const text: string[] = arrows ?  [
+    "<",
+    "^",
+    "?",
+    ">",
+  ] : [
+    "Left",
+    "Up",
+    "Down",
+    "Right",
+  ]
   return (
     <View style={styles.container}>
-      <ZUIArrowButton text="Left" />
+      <ZUIArrowButton text={text[0]} />
       <View style={styles.column}>
-        <ZUIArrowButton text="Up" />
-        <ZUIArrowButton text="Down" />
+        <ZUIArrowButton text={text[1]} />
+        <ZUIArrowButton text={text[2]} />
       </View>
-      <ZUIArrowButton text="Right" />
+      <ZUIArrowButton text={text[3]} />
     </View>
   );
 };
