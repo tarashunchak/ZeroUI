@@ -47,14 +47,8 @@ export default function ZUIAnalogStick(props: ZUIAnalogStickParams) {
 
   const panGesture = Gesture.Pan()
     .onUpdate((event) => {
-      let [x, y] = [event.x - 50, event.y - 50];
-      const tmp = vectorLength(x, y);
-      if(tmp > 50){
-        x %= 51;
-        y %= 51;
-      }
-      translationX.value = withSpring(x);
-      translationY.value = withSpring(y);
+      translationX.value = withSpring((event.x - 50) % 51);
+      translationY.value = withSpring((event.y - 50) % 51);
     }).onEnd(() => {
       translationX.value = withSpring(props.defaultValue ?? 0);
       translationY.value = withSpring(props.defaultValue ?? 0);
