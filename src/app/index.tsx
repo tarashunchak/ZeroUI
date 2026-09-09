@@ -7,7 +7,7 @@ import LabeledTextInput from '@/components/ui/labeled-text-input';
 import ZUINumPad from '@/components/ui/numpad';
 import ZUIToggleButton from '@/components/ui/toggle-button';
 import { Stack } from 'expo-router';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
@@ -18,20 +18,22 @@ export default function HomeScreen() {
         headerShown: false,
       }}
     >
-      <View style={[styles.container, { paddingTop: insets.top }]}>
-        <Text style={styles.label}>Zero UI</Text>
-        <View style={styles.contentBlock}>
-          <ZUINumPad />
-          <ZUIAnalogBar minVal={0} maxVal={1024} gap={1} color="" />
-          <ZUIToggleButton orientation='v' />
-          <ZUIAnalogStick maxValue={50} minValue={-50} size={20} defaultValue={undefined} />
-          <ZUIArrowButtonsBlock />
-          <ZUIBlueButton />
-          <LabeledTextInput label='MC IP Address' />
-          <LabeledTextInput label='Port' />
-          <ConfirmButton onPress={() => { }} />
+      <ScrollView style={[styles.container, { paddingTop: insets.top }]}>
+        <View style={{ alignItems: "center" }}>
+          <Text style={styles.label}>Zero UI</Text>
+          <View style={styles.contentBlock}>
+            <ZUINumPad />
+            <ZUIAnalogBar minVal={0} maxVal={1024} gap={1} color="" />
+            <ZUIToggleButton orientation='v' />
+            <ZUIAnalogStick maxValue={50} minValue={-50} size={20} defaultValue={undefined} />
+            <ZUIArrowButtonsBlock />
+            <ZUIBlueButton />
+            <LabeledTextInput label='MC IP Address' />
+            <LabeledTextInput label='Port' />
+            <ConfirmButton onPress={() => { }} />
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </Stack.Screen>
   );
 }
@@ -39,8 +41,8 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "black",
-    alignItems: "center",
-    gap: 80
+    gap: 80,
+    flex: 1,
   },
   label: {
     fontSize: 56,
